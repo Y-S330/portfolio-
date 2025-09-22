@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yousef Ehab Saber - Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 25%, #3b82f6 50%, #60a5fa 75%, #93c5fd 100%);
+        }
+        
+        .code-bg {
+            background-image: 
+                linear-gradient(90deg, rgba(59, 130, 246, 0.1) 1px, transparent 1px),
+                linear-gradient(rgba(59, 130, 246, 0.1) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+        
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        .slide-in {
+            animation: slideIn 0.8s ease-out forwards;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        
+        @keyframes slideIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .skill-bar {
+            transition: width 2s ease-in-out;
+        }
+        
+        .project-card {
+            transition: all 0.3s ease;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(59, 130, 246, 0.3);
+        }
+        
+        .nav-link {
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link:hover {
+            color: #60a5fa;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body class="bg-slate-900 text-white">
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full bg-slate-900/95 backdrop-blur-sm z-50 border-b border-blue-800/30">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-4">
+                <div class="text-2xl font-bold text-blue-400">YS</div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#home" class="nav-link">Home</a>
+                    <a href="#about" class="nav-link">About</a>
+                    <a href="#skills" class="nav-link">Skills</a>
+                    <a href="#projects" class="nav-link">Projects</a>
+                    <a href="#services" class="nav-link">Services</a>
+                    <a href="#contact" class="nav-link">Contact</a>
+                </div>
+                <button id="mobile-menu-btn" class="md:hidden text-blue-400">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-slate-800 border-t border-blue-800/30">
+            <div class="px-4 py-2 space-y-2">
+                <a href="#home" class="block py-2 nav-link">Home</a>
+                <a href="#about" class="block py-2 nav-link">About</a>
+                <a href="#skills" class="block py-2 nav-link">Skills</a>
+                <a href="#projects" class="block py-2 nav-link">Projects</a>
+                <a href="#services" class="block py-2 nav-link">Services</a>
+                <a href="#contact" class="block py-2 nav-link">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="min-h-screen gradient-bg code-bg flex items-center justify-center relative overflow-hidden">
+        <div class="absolute inset-0 bg-slate-900/60"></div>
+        <div class="relative z-10 text-center px-4 max-w-4xl mx-auto">
+            <div class="floating mb-8">
+                <div class="w-32 h-32 mx-auto bg-blue-600 rounded-full flex items-center justify-center text-4xl font-bold shadow-2xl">
+                    YS
+                </div>
+            </div>
+            <h1 class="text-5xl md:text-7xl font-bold mb-6 slide-in">
+                Yousef Ehab Saber
+            </h1>
+            <p class="text-xl md:text-2xl text-blue-200 mb-8 slide-in" style="animation-delay: 0.2s;">
+                Full Stack Developer | Data Scientist | Aviation Information Systems Enthusiast
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center slide-in" style="animation-delay: 0.4s;">
+                <a href="#projects" class="bg-blue-600 hover:bg-blue-700 px-8 py-3 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105">
+                    View My Work
+                </a>
+                <a href="#contact" class="border-2 border-blue-400 hover:bg-blue-400 hover:text-slate-900 px-8 py-3 rounded-lg font-semibold transition-all duration-300">
+                    Get In Touch
+                </a>
+            </div>
+        </div>
+        
+        <!-- Floating Data Visualization -->
+        <div class="absolute top-20 right-10 w-64 h-40 hidden lg:block">
+            <canvas id="heroChart" class="floating opacity-30"></canvas>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-slate-800">
+        <div class="max-w-6xl mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center mb-16 text-blue-400">About Me</h2>
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div class="space-y-6">
+                    <p class="text-lg text-gray-300 leading-relaxed">
+                        I am a Full Stack Developer and Data Scientist with strong expertise in Python, C++, SQL, and modern web development frameworks. With a background in Aviation Information Systems and a degree from Zagazig National University, I combine data-driven solutions with software engineering to create smart systems, predictive models, and interactive dashboards.
+                    </p>
+                    <p class="text-lg text-gray-300 leading-relaxed">
+                        My unique combination of technical skills and domain expertise allows me to bridge the gap between complex data analysis and practical software solutions, delivering innovative systems that drive real-world impact.
+                    </p>
+                </div>
+                <div class="bg-slate-700 p-8 rounded-xl">
+                    <h3 class="text-2xl font-semibold mb-6 text-blue-400">Education</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-center space-x-4">
+                            <div class="w-3 h-3 bg-blue-500 rounded-full"></div>
+                            <div>
+                                <h4 class="font-semibold">Bachelor's Degree</h4>
+                                <p class="text-gray-400">Zagazig National University</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-4">
+                            <div class="w-3 h-3 bg-blue-500 rounded-full"></div>
+                            <div>
+                                <h4 class="font-semibold">Full Stack Development</h4>
+                                <p class="text-gray-400">ITI</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-4">
+                            <div class="w-3 h-3 bg-blue-500 rounded-full"></div>
+                            <div>
+                                <h4 class="font-semibold">Data Science</h4>
+                                <p class="text-gray-400">DEPI</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-4">
+                            <div class="w-3 h-3 bg-blue-500 rounded-full"></div>
+                            <div>
+                                <h4 class="font-semibold">Space Technology</h4>
+                                <p class="text-gray-400">Space Keys, Sep 2024</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="py-20 bg-slate-900">
+        <div class="max-w-6xl mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center mb-16 text-blue-400">Skills</h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="bg-slate-800 p-6 rounded-xl">
+                    <div class="text-blue-400 text-3xl mb-4">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-4">Programming</h3>
+                    <div class="space-y-3">
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span>Python</span>
+                                <span>95%</span>
+                            </div>
+                            <div class="bg-slate-700 rounded-full h-2">
+                                <div class="skill-bar bg-blue-500 h-2 rounded-full" style="width: 95%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span>C++</span>
+                                <span>85%</span>
+                            </div>
+                            <div class="bg-slate-700 rounded-full h-2">
+                                <div class="skill-bar bg-blue-500 h-2 rounded-full" style="width: 85%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span>JavaScript</span>
+                                <span>88%</span>
+                            </div>
+                            <div class="bg-slate-700 rounded-full h-2">
+                                <div class="skill-bar bg-blue-500 h-2 rounded-full" style="width: 88%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span>C#</span>
+                                <span>80%</span>
+                            </div>
+                            <div class="bg-slate-700 rounded-full h-2">
+                                <div class="skill-bar bg-blue-500 h-2 rounded-full" style="width: 80%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-slate-800 p-6 rounded-xl">
+                    <div class="text-blue-400 text-3xl mb-4">
+                        <i class="fas fa-chart-bar"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-4">Data Science</h3>
+                    <div class="space-y-2 text-sm">
+                        <span class="inline-block bg-blue-600 px-2 py-1 rounded">SQL</span>
+                        <span class="inline-block bg-blue-600 px-2 py-1 rounded">Pandas</span>
+                        <span class="inline-block bg-blue-600 px-2 py-1 rounded">NumPy</span>
+                        <span class="inline-block bg-blue-600 px-2 py-1 rounded">Scikit-learn</span>
+                        <span class="inline-block bg-blue-600 px-2 py-1 rounded">TensorFlow</span>
+                        <span class="inline-block bg-blue-600 px-2 py-1 rounded">Keras</span>
+                        <span class="inline-block bg-blue-600 px-2 py-1 rounded">Matplotlib</span>
+                        <span class="inline-block bg-blue-600 px-2 py-1 rounded">Seaborn</span>
+                        <span class="inline-block bg-blue-600 px-2 py-1 rounded">Plotly</span>
+                        <span class="inline-block bg-blue-600 px-2 py-1 rounded">MATLAB</span>
+                    </div>
+                </div>
+
+                <div class="bg-slate-800 p-6 rounded-xl">
+                    <div class="text-blue-400 text-3xl mb-4">
+                        <i class="fas fa-globe"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-4">Web Development</h3>
+                    <div class="space-y-2 text-sm">
+                        <span class="inline-block bg-blue-600 px-2 py-1 rounded">HTML</span>
+                        <span class="inline-block bg-blue-600 px-2 py-1 rounded">CSS</span>
+                        <span class="inline-block bg-blue-600 px-2 py-1 rounded">JavaScript</span>
+                        <span class="inline-block bg-blue-600 px-2 py-1 rounded">React</span>
+                        <span class="inline-block bg-blue-600 px-2 py-1 rounded">Flask</span>
+                        <span class="inline-block bg-blue-600 px-2 py-1 rounded">Django</span>
+                    </div>
+                </div>
+
+                <div class="bg-slate-800 p-6 rounded-xl">
+                    <div class="text-blue-400 text-3xl mb-4">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-4">Databases & BI</h3>
+                    <div class="space-y-2 text-sm">
+                        <span class="inline-block bg-blue-600 px-2 py-1 rounded">MySQL</span>
+                        <span class="inline-block bg-blue-600 px-2 py-1 rounded">PostgreSQL</span>
+                        <span class="inline-block bg-blue-600 px-2 py-1 rounded">MongoDB</span>
+                        <span class="inline-block bg-blue-600 px-2 py-1 rounded">Power BI</span>
+                        <span class="inline-block bg-blue-600 px-2 py-1 rounded">Plotly Dash</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mt-8">
+                <div class="bg-slate-800 p-6 rounded-xl">
+                    <div class="text-blue-400 text-3xl mb-4">
+                        <i class="fas fa-tools"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-4">Tools & Cloud</h3>
+                    <div class="space-y-2 text-sm">
+                        <span class="inline-block bg-blue-600 px-2 py-1 rounded">Git/GitHub</span>
+                        <span class="inline-block bg-blue-600 px-2 py-1 rounded">Docker</span>
+                        <span class="inline-block bg-blue-600 px-2 py-1 rounded">AWS</span>
+                        <span class="inline-block bg-blue-600 px-2 py-1 rounded">Azure</span>
+                        <span class="inline-block bg-blue-600 px-2 py-1 rounded">APIs</span>
+                    </div>
+                </div>
+                
+                <div class="bg-slate-800 p-6 rounded-xl">
+                    <div class="text-blue-400 text-3xl mb-4">
+                        <i class="fas fa-plane"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-4">Domain Expertise</h3>
+                    <div class="space-y-2 text-sm">
+                        <span class="inline-block bg-blue-600 px-2 py-1 rounded">Aviation Systems</span>
+                        <span class="inline-block bg-blue-600 px-2 py-1 rounded">Baggage Tracking</span>
+                        <span class="inline-block bg-blue-600 px-2 py-1 rounded">Predictive Analytics</span>
+                        <span class="inline-block bg-blue-600 px-2 py-1 rounded">GIS Analysis</span>
+                    </div>
+                </div>
+                
+                <div class="bg-slate-800 p-6 rounded-xl">
+                    <div class="text-blue-400 text-3xl mb-4">
+                        <i class="fas fa-cogs"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-4">Methodologies</h3>
+                    <div class="space-y-2 text-sm">
+                        <span class="inline-block bg-blue-600 px-2 py-1 rounded">Agile</span>
+                        <span class="inline-block bg-blue-600 px-2 py-1 rounded">Machine Learning</span>
+                        <span class="inline-block bg-blue-600 px-2 py-1 rounded">Data Mining</span>
+                        <span class="inline-block bg-blue-600 px-2 py-1 rounded">System Design</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-20 bg-slate-800">
+        <div class="max-w-6xl mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center mb-16 text-blue-400">Featured Projects</h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="project-card bg-slate-700 rounded-xl overflow-hidden">
+                    <div class="p-6">
+                        <div class="text-4xl mb-4">🛄</div>
+                        <h3 class="text-xl font-semibold mb-3">Smart Baggage Tracking System</h3>
+                        <p class="text-gray-300 mb-4">End-to-end aviation-focused project with functional diagrams and data-driven workflows.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-blue-600 px-2 py-1 rounded text-xs">Python</span>
+                            <span class="bg-blue-600 px-2 py-1 rounded text-xs">Aviation</span>
+                            <span class="bg-blue-600 px-2 py-1 rounded text-xs">UML</span>
+                            <span class="bg-blue-600 px-2 py-1 rounded text-xs">System Design</span>
+                        </div>
+                        <button class="text-blue-400 hover:text-blue-300 font-semibold">View Details →</button>
+                    </div>
+                </div>
+
+                <div class="project-card bg-slate-700 rounded-xl overflow-hidden">
+                    <div class="p-6">
+                        <div class="text-4xl mb-4">📊</div>
+                        <h3 class="text-xl font-semibold mb-3">Interactive BI Dashboards</h3>
+                        <p class="text-gray-300 mb-4">Custom dashboards built with Plotly Dash for real-time data monitoring and decision-making.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-blue-600 px-2 py-1 rounded text-xs">Plotly Dash</span>
+                            <span class="bg-blue-600 px-2 py-1 rounded text-xs">Python</span>
+                            <span class="bg-blue-600 px-2 py-1 rounded text-xs">BI</span>
+                            <span class="bg-blue-600 px-2 py-1 rounded text-xs">Visualization</span>
+                        </div>
+                        <button class="text-blue-400 hover:text-blue-300 font-semibold">View Details →</button>
+                    </div>
+                </div>
+
+                <div class="project-card bg-slate-700 rounded-xl overflow-hidden">
+                    <div class="p-6">
+                        <div class="text-4xl mb-4">🔧</div>
+                        <h3 class="text-xl font-semibold mb-3">Predictive Maintenance Model</h3>
+                        <p class="text-gray-300 mb-4">Machine learning model to predict equipment failures for operational efficiency optimization.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-blue-600 px-2 py-1 rounded text-xs">ML</span>
+                            <span class="bg-blue-600 px-2 py-1 rounded text-xs">Python</span>
+                            <span class="bg-blue-600 px-2 py-1 rounded text-xs">Predictive Analytics</span>
+                            <span class="bg-blue-600 px-2 py-1 rounded text-xs">IoT</span>
+                        </div>
+                        <button class="text-blue-400 hover:text-blue-300 font-semibold">View Details →</button>
+                    </div>
+                </div>
+
+                <div class="project-card bg-slate-700 rounded-xl overflow-hidden">
+                    <div class="p-6">
+                        <div class="text-4xl mb-4">🌍</div>
+                        <h3 class="text-xl font-semibold mb-3">Spatial Data Analysis</h3>
+                        <p class="text-gray-300 mb-4">GIS-based data visualization and insights for location-driven decision making.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-blue-600 px-2 py-1 rounded text-xs">GIS</span>
+                            <span class="bg-blue-600 px-2 py-1 rounded text-xs">Python</span>
+                            <span class="bg-blue-600 px-2 py-1 rounded text-xs">Geospatial</span>
+                            <span class="bg-blue-600 px-2 py-1 rounded text-xs">Mapping</span>
+                        </div>
+                        <button class="text-blue-400 hover:text-blue-300 font-semibold">View Details →</button>
+                    </div>
+                </div>
+
+                <div class="project-card bg-slate-700 rounded-xl overflow-hidden">
+                    <div class="p-6">
+                        <div class="text-4xl mb-4">🤖</div>
+                        <h3 class="text-xl font-semibold mb-3">ML Trend Prediction</h3>
+                        <p class="text-gray-300 mb-4">Applied regression and classification models to forecast real-world business outcomes.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-blue-600 px-2 py-1 rounded text-xs">Machine Learning</span>
+                            <span class="bg-blue-600 px-2 py-1 rounded text-xs">TensorFlow</span>
+                            <span class="bg-blue-600 px-2 py-1 rounded text-xs">Forecasting</span>
+                            <span class="bg-blue-600 px-2 py-1 rounded text-xs">Analytics</span>
+                        </div>
+                        <button class="text-blue-400 hover:text-blue-300 font-semibold">View Details →</button>
+                    </div>
+                </div>
+
+                <div class="project-card bg-slate-700 rounded-xl overflow-hidden">
+                    <div class="p-6">
+                        <div class="text-4xl mb-4">📈</div>
+                        <h3 class="text-xl font-semibold mb-3">Full-Stack Web Applications</h3>
+                        <p class="text-gray-300 mb-4">Modern web applications with React frontend and Python backend integration.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-blue-600 px-2 py-1 rounded text-xs">React</span>
+                            <span class="bg-blue-600 px-2 py-1 rounded text-xs">Flask</span>
+                            <span class="bg-blue-600 px-2 py-1 rounded text-xs">JavaScript</span>
+                            <span class="bg-blue-600 px-2 py-1 rounded text-xs">API</span>
+                        </div>
+                        <button class="text-blue-400 hover:text-blue-300 font-semibold">View Details →</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-20 bg-slate-900">
+        <div class="max-w-6xl mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center mb-16 text-blue-400">Services Offered</h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-slate-800 p-8 rounded-xl text-center">
+                    <div class="text-blue-400 text-4xl mb-4">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-4">Data Analysis & Visualization</h3>
+                    <p class="text-gray-300">EDA, interactive dashboards, and comprehensive reporting solutions.</p>
+                </div>
+
+                <div class="bg-slate-800 p-8 rounded-xl text-center">
+                    <div class="text-blue-400 text-4xl mb-4">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-4">Machine Learning Solutions</h3>
+                    <p class="text-gray-300">Predictive modeling, classification, clustering, and AI-driven insights.</p>
+                </div>
+
+                <div class="bg-slate-800 p-8 rounded-xl text-center">
+                    <div class="text-blue-400 text-4xl mb-4">
+                        <i class="fas fa-laptop-code"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-4">Web Development</h3>
+                    <p class="text-gray-300">Full-stack development with modern frameworks and responsive design.</p>
+                </div>
+
+                <div class="bg-slate-800 p-8 rounded-xl text-center">
+                    <div class="text-blue-400 text-4xl mb-4">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-4">Database & SQL Optimization</h3>
+                    <p class="text-gray-300">Database design, query optimization, and data architecture solutions.</p>
+                </div>
+
+                <div class="bg-slate-800 p-8 rounded-xl text-center">
+                    <div class="text-blue-400 text-4xl mb-4">
+                        <i class="fas fa-business-time"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-4">Business Intelligence</h3>
+                    <p class="text-gray-300">BI reporting, data consulting, and strategic insights for business growth.</p>
+                </div>
+
+                <div class="bg-slate-800 p-8 rounded-xl text-center">
+                    <div class="text-blue-400 text-4xl mb-4">
+                        <i class="fas fa-plane-departure"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-4">Aviation Systems</h3>
+                    <p class="text-gray-300">Specialized solutions for aviation information systems and tracking.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="py-20 bg-slate-800">
+        <div class="max-w-6xl mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center mb-16 text-blue-400">What People Say</h2>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="bg-slate-700 p-6 rounded-xl">
+                    <div class="text-4xl text-blue-400 mb-4">"</div>
+                    <p class="text-gray-300 mb-4 italic">
+                        "Yousef's Smart Baggage Tracking System was an innovative solution for aviation operations. His structured approach and clarity impressed us greatly."
+                    </p>
+                    <div class="text-blue-400 font-semibold">— Airline Systems Project Mentor</div>
+                </div>
+                
+                <div class="bg-slate-700 p-6 rounded-xl">
+                    <div class="text-4xl text-blue-400 mb-4">"</div>
+                    <p class="text-gray-300 mb-4 italic">
+                        "His Plotly Dash dashboards turned raw data into actionable insights. Professional, detail-oriented, and easy to collaborate with."
+                    </p>
+                    <div class="text-blue-400 font-semibold">— DataFlow Solutions Manager</div>
+                </div>
+                
+                <div class="bg-slate-700 p-6 rounded-xl">
+                    <div class="text-4xl text-blue-400 mb-4">"</div>
+                    <p class="text-gray-300 mb-4 italic">
+                        "Yousef combines technical depth with creativity. His predictive analytics work gave our team a clear advantage in planning and strategy."
+                    </p>
+                    <div class="text-blue-400 font-semibold">— Academic Supervisor</div>
+                </div>
+                
+                <div class="bg-slate-700 p-6 rounded-xl">
+                    <div class="text-4xl text-blue-400 mb-4">"</div>
+                    <p class="text-gray-300 mb-4 italic">
+                        "Great problem solver with strong coding skills. Highly recommended for both development and data projects."
+                    </p>
+                    <div class="text-blue-400 font-semibold">— Freelance Client</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-slate-900">
+        <div class="max-w-4xl mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center mb-16 text-blue-400">Get In Touch</h2>
+            <div class="grid md:grid-cols-2 gap-12">
+                <div class="space-y-8">
+                    <div class="flex items-center space-x-4">
+                        <div class="bg-blue-600 p-3 rounded-full">
+                            <i class="fas fa-envelope text-white"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold">Email</h3>
+                            <a href="mailto:yousefehab330@gmail.com" class="text-blue-400 hover:text-blue-300">yousefehab330@gmail.com</a>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center space-x-4">
+                        <div class="bg-blue-600 p-3 rounded-full">
+                            <i class="fas fa-phone text-white"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold">Phone</h3>
+                            <a href="tel:01119218689" class="text-blue-400 hover:text-blue-300">01119218689</a>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center space-x-4">
+                        <div class="bg-blue-600 p-3 rounded-full">
+                            <i class="fab fa-linkedin text-white"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold">LinkedIn</h3>
+                            <a href="https://linkedin.com/in/yousef-ehab-026377352" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:text-blue-300">linkedin.com/in/yousef-ehab-026377352</a>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center space-x-4">
+                        <div class="bg-blue-600 p-3 rounded-full">
+                            <i class="fab fa-github text-white"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold">GitHub</h3>
+                            <a href="https://github.com/Y-S330" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:text-blue-300">github.com/Y-S330</a>
+                        </div>
+                    </div>
+                </div>
+
+                <form id="contact-form" class="space-y-6">
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Name</label>
+                        <input type="text" required class="w-full px-4 py-3 bg-slate-800 border border-slate-600 rounded-lg focus:border-blue-400 focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Email</label>
+                        <input type="email" required class="w-full px-4 py-3 bg-slate-800 border border-slate-600 rounded-lg focus:border-blue-400 focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Message</label>
+                        <textarea rows="4" required class="w-full px-4 py-3 bg-slate-800 border border-slate-600 rounded-lg focus:border-blue-400 focus:outline-none"></textarea>
+                    </div>
+                    <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 py-3 rounded-lg font-semibold transition-colors duration-300">
+                        Send Message
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-800 py-8 border-t border-blue-800/30">
+        <div class="max-w-6xl mx-auto px-4 text-center">
+            <p class="text-gray-400">&copy; 2024 Yousef Ehab Saber. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                    // Close mobile menu if open
+                    mobileMenu.classList.add('hidden');
+                }
+            });
+        });
+
+        // Contact form handling
+        document.getElementById('contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form data
+            const formData = new FormData(this);
+            const name = formData.get('name') || this.querySelector('input[type="text"]').value;
+            const email = formData.get('email') || this.querySelector('input[type="email"]').value;
+            const message = formData.get('message') || this.querySelector('textarea').value;
+            
+            // Show success message
+            alert(`Thank you ${name}! Your message has been received. I'll get back to you soon at ${email}.`);
+            
+            // Reset form
+            this.reset();
+        });
+
+        // Hero chart
+        const ctx = document.getElementById('heroChart');
+        if (ctx) {
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                    datasets: [{
+                        label: 'Skills Growth',
+                        data: [65, 70, 75, 82, 88, 95],
+                        borderColor: '#60a5fa',
+                        backgroundColor: 'rgba(96, 165, 250, 0.1)',
+                        tension: 0.4,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        x: {
+                            display: false
+                        },
+                        y: {
+                            display: false
+                        }
+                    },
+                    elements: {
+                        point: {
+                            radius: 0
+                        }
+                    }
+                }
+            });
+        }
+
+        // Animate skill bars on scroll
+        const observerOptions = {
+            threshold: 0.5,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const skillBars = entry.target.querySelectorAll('.skill-bar');
+                    skillBars.forEach(bar => {
+                        const width = bar.style.width;
+                        bar.style.width = '0%';
+                        setTimeout(() => {
+                            bar.style.width = width;
+                        }, 200);
+                    });
+                }
+            });
+        }, observerOptions);
+
+        const skillsSection = document.getElementById('skills');
+        if (skillsSection) {
+            observer.observe(skillsSection);
+        }
+
+        // Add slide-in animation to elements as they come into view
+        const slideElements = document.querySelectorAll('.slide-in');
+        const slideObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animationPlayState = 'running';
+                }
+            });
+        }, { threshold: 0.1 });
+
+        slideElements.forEach(el => {
+            el.style.animationPlayState = 'paused';
+            slideObserver.observe(el);
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'98338b3a8055e204',t:'MTc1ODU2MjM2OS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
